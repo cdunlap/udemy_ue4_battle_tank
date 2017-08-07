@@ -20,9 +20,6 @@ public:
 	ATank();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
-
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
@@ -38,5 +35,5 @@ public:
 		void SetTurretReference(UTankTurret * TurretToSet);
 private:
 	UPROPERTY(EditAnywhere, Category = Firing)
-		float LaunchSpeed = 1e5; // Start at 1000 m/s
+		float LaunchSpeed = 4000;
 };
