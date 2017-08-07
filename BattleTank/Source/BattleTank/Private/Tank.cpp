@@ -20,9 +20,9 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 }
 
-void ATank::AimAt(const FVector & HitLocation)
+void ATank::Fire()
 {
-	AimingComponent->AimAt(HitLocation, LaunchSpeed);
+	UE_LOG(LogTemp, Warning, TEXT("%s firing"), *GetName());
 }
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
@@ -33,5 +33,10 @@ void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
 void ATank::SetTurretReference(UTankTurret * TurretToSet)
 {
 	AimingComponent->SetTurretReference(TurretToSet);
+}
+
+void ATank::AimAt(const FVector & HitLocation)
+{
+	AimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
