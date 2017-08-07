@@ -3,6 +3,7 @@
 #include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "Kismet/GameplayStatics.h"
+#include "BattleTank.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -19,6 +20,7 @@ void UTankAimingComponent::AimAt(const FVector & HitLocation, float LaunchSpeed)
 	if (!Barrel)
 		return;
 
+	float time = GetWorld()->GetTimeSeconds();
 	FVector LaunchVelocity;
 	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
 	TArray<AActor*> IgnoreActors;
@@ -30,14 +32,14 @@ void UTankAimingComponent::AimAt(const FVector & HitLocation, float LaunchSpeed)
 		FCollisionResponseParams::DefaultResponseParam, IgnoreActors))
 	{
 		FVector AimDirection = LaunchVelocity.GetSafeNormal();
-		UE_LOG(LogTemp, Warning, TEXT("%s Aiming at %s"), *GetOwner()->GetName(), *AimDirection.ToString());
+		// UE_LOG(LogTemp, Warning, TEXT("%f %s Aiming at %s"), time, *GetOwner()->GetName(), *AimDirection.ToString());
 
 		// Orient the barrel mesh to the direction
 		MoveBarrelTowards(AimDirection);
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("No firing solution"));
+		UE_LOG(LogTemp, Warning, TEXT("%f No firing solution"), time);
 	}
 }
 
@@ -52,5 +54,5 @@ void UTankAimingComponent::MoveBarrelTowards(const FVector & AimDirection)
 	FRotator AimRotator = AimDirection.Rotation();
 	FRotator DeltaRotator = AimRotator - BarrelRotator;
 
-	Barrel->Elevate(5.0f);
+	Barrel->Elevate(DeltaRotator.Pitch);
 }
