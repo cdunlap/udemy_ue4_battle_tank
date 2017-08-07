@@ -33,4 +33,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 		void SetBarrelReference(UStaticMeshComponent * BarrelToSet);
+
+private:
+	UPROPERTY(EditAnywhere, Category = Firing)
+		float LaunchSpeed = 1e5; // Start at 1000 m/s
 };
