@@ -18,6 +18,9 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 protected:
 	void Tick(float DeltaTime) override;
 
+	UFUNCTION(BlueprintCallable, Category = Setup)
+		ATank * GetControlledTank() const;
+
 private:
 	UPROPERTY(EditDefaultsOnly)
 		float CrosshairXLocation = 0.5;
@@ -27,8 +30,6 @@ private:
 
 	UPROPERTY(EditDefaultsOnly)
 		int32 LineTraceRange = 1e6;
-
-	ATank * GetControlledTank() const;
 	
 	void AimTowardCrosshair();
 

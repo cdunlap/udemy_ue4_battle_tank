@@ -25,7 +25,8 @@ protected:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UTankAimingComponent * AimingComponent = nullptr;
+	UPROPERTY(BlueprintReadOnly)
+		UTankAimingComponent * AimingComponent = nullptr;
 
 	UPROPERTY(BlueprintReadOnly)
 		UTankMovementComponent * MovementComponent = nullptr;
