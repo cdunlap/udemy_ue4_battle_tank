@@ -6,7 +6,7 @@
 
 void UTankMovementComponent::IntendMoveForward(float Throw)
 {
-	if (!LeftTrack || !RightTrack)
+	if (!ensure(LeftTrack && RightTrack))
 		return;
 
 	LeftTrack->SetThrottle(Throw);
@@ -15,7 +15,7 @@ void UTankMovementComponent::IntendMoveForward(float Throw)
 
 void UTankMovementComponent::IntendTurnRight(float Throw)
 {
-	if (!LeftTrack || !RightTrack)
+	if (!ensure(LeftTrack && RightTrack))
 		return;
 
 	LeftTrack->SetThrottle(Throw);
@@ -25,7 +25,7 @@ void UTankMovementComponent::IntendTurnRight(float Throw)
 void UTankMovementComponent::Initialize(UTankTrack * LeftTrackToSet, UTankTrack * RightTrackToSet)
 {
 
-	if (!LeftTrackToSet || !RightTrackToSet) {
+	if (!ensure(LeftTrackToSet && RightTrackToSet)) {
 		UE_LOG(LogTemp, Error, TEXT("%f %s::Initialize; Left and right track not specified"), GetWorld()->GetTimeSeconds(), *GetName());
 		return;
 	}

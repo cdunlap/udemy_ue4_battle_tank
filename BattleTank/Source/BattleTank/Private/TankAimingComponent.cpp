@@ -24,7 +24,7 @@ void UTankAimingComponent::Initialize(UTankTurret * TurretToSet, UTankBarrel * B
 
 void UTankAimingComponent::AimAt(const FVector & HitLocation, float LaunchSpeed)
 {
-	if (!Barrel)
+	if (!ensure(Barrel))
 		return;
 
 	float time = GetWorld()->GetTimeSeconds();
@@ -48,7 +48,7 @@ void UTankAimingComponent::AimAt(const FVector & HitLocation, float LaunchSpeed)
 
 void UTankAimingComponent::MoveBarrelTowards(const FVector & AimDirection)
 {
-	if (!(Barrel && Turret)) return;
+	if (!ensure(Barrel && Turret)) return;
 
 	FRotator AimRotator = AimDirection.Rotation();
 

@@ -1,7 +1,24 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "Tank.h"
+#include "TankAimingComponent.h"
 #include "Engine/World.h"
+
+void ATankPlayerController::BeginPlay()
+{
+	Super::BeginPlay();
+
+	UTankAimingComponent * AimingComponent = GetControlledTank()->FindComponentByClass<UTankAimingComponent>();
+	if (AimingComponent)
+	{
+		FoundAimingComponent(AimingComponent);
+	}
+	else
+	{
+		UE_LOG(LogTemp, Error, TEXT("Unable to find UTankAimingComponent on %s"), *GetName());
+	}
+}
 
 void ATankPlayerController::Tick(float DeltaTime)
 {
@@ -17,8 +34,8 @@ ATank * ATankPlayerController::GetControlledTank() const
 void ATankPlayerController::AimTowardCrosshair()
 {
 	// Move the tank barrel so the shot would hit where the crosshair intersects the world
-
-	if (!GetControlledTank())
+	
+	if (!ensure(GetControlledTank()))
 		return;
 
 	FVector HitLocation;

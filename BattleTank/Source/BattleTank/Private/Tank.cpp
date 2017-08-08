@@ -16,9 +16,11 @@ ATank::ATank()
 
 void ATank::Fire()
 {
+	if (!ensure(Barrel)) return;
+
 	bool isReloaded = GetWorld()->GetTimeSeconds() - LastFireTime > ReloadTimeInSeconds;
 
-	if (Barrel && isReloaded)
+	if (isReloaded)
 	{
 		LastFireTime = GetWorld()->GetTimeSeconds();
 
@@ -34,6 +36,8 @@ void ATank::Fire()
 
 void ATank::AimAt(const FVector & HitLocation)
 {
+	if (!ensure(AimingComponent)) return;
+
 	AimingComponent->AimAt(HitLocation, LaunchSpeed);
 }
 
