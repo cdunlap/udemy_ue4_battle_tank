@@ -38,10 +38,6 @@ void UTankAimingComponent::AimAt(const FVector & HitLocation, float LaunchSpeed)
 		// Orient the barrel mesh to the direction
 		MoveBarrelTowards(AimDirection);
 	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("%f No firing solution"), time);
-	}
 }
 
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)

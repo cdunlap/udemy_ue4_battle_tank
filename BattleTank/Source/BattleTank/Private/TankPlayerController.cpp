@@ -3,23 +3,6 @@
 #include "TankPlayerController.h"
 #include "Engine/World.h"
 
-void ATankPlayerController::BeginPlay()
-{
-	Super::BeginPlay();
-
-	UE_LOG(LogTemp, Warning, TEXT("PlayerController begin play"));
-
-	ATank * tank = GetControlledTank();
-	if (tank == nullptr)
-	{
-		UE_LOG(LogTemp, Error, TEXT("ControlledTank returned null. Check that the player is possessing a tank"));
-	}
-	else
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Player controlled tank: %s"), *tank->GetName());
-	}
-}
-
 void ATankPlayerController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);

@@ -13,7 +13,6 @@ void ATankAIController::Tick(float DeltaTime)
 
 	if (player)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Aiming at player"));
 		// TODO: Move toward player
 
 		// Aim towards player
