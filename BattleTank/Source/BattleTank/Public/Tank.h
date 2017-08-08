@@ -22,9 +22,6 @@ public:
 	ATank();
 
 protected:
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
 	UPROPERTY(BlueprintReadOnly)
 		UTankAimingComponent * AimingComponent = nullptr;
 
@@ -35,12 +32,6 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Firing)
 		void Fire();
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetBarrelReference(UTankBarrel * BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-		void SetTurretReference(UTankTurret * TurretToSet);
 
 	void AimAt(const FVector & HitLocation);
 
