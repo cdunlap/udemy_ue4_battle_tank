@@ -30,11 +30,12 @@ void ATank::Fire()
 		return;
 
 	FVector ProjectileStart = Barrel->GetSocketLocation(FName("Projectile"));
-	GetWorld()->SpawnActor<AProjectile>(
+	AProjectile * projectile = GetWorld()->SpawnActor<AProjectile>(
 		ProjectileBlueprint,
 		Barrel->GetSocketLocation(FName("Projectile")),
 		Barrel->GetSocketRotation(FName("Projectile"))
 		);
+	projectile->LaunchProjectile(LaunchSpeed);
 }
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
