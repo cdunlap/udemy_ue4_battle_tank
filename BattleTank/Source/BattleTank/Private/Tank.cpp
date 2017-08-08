@@ -24,9 +24,9 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::Fire()
 {
-	if (Barrel && FPlatformTime::Seconds() - LastFireTime > ReloadTimeInSeconds)
+	if (Barrel && GetWorld()->GetTimeSeconds() - LastFireTime > ReloadTimeInSeconds)
 	{
-		LastFireTime = FPlatformTime::Seconds();
+		LastFireTime = GetWorld()->GetTimeSeconds();
 
 		FVector ProjectileStart = Barrel->GetSocketLocation(FName("Projectile"));
 		AProjectile * projectile = GetWorld()->SpawnActor<AProjectile>(
