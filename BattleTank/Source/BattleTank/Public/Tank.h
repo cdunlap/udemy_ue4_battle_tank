@@ -42,6 +42,7 @@ public:
 		void SetTurretReference(UTankTurret * TurretToSet);
 
 	void AimAt(const FVector & HitLocation);
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 		float LaunchSpeed = 4000;

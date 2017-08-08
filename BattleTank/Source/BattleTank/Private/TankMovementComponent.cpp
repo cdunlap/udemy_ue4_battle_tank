@@ -32,3 +32,18 @@ void UTankMovementComponent::Initialize(UTankTrack * LeftTrackToSet, UTankTrack 
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 }
+
+void UTankMovementComponent::RequestDirectMove(const FVector & MoveVelocity, bool bForceMaxSpeed)
+{
+	// Don't call Super, we're overriding the behavior
+
+	FVector TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	FVector MoveDirection = MoveVelocity.GetSafeNormal();
+	float ForwardAmount = FVector::DotProduct(TankForward, MoveDirection);
+	IntendMoveForward(ForwardAmount);
+
+	FVector RotationCross = FVector::CrossProduct(TankForward, MoveDirection);
+	IntendTurnRight(RotationCross.Z);
+
+	// UE_LOG(LogTemp, Warning, TEXT("%f: %s vectoring to %s"), GetWorld()->GetTimeSeconds(), *TankName, *MoveDirection.ToString());
+}
