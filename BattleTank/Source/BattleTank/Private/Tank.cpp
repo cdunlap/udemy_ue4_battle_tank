@@ -24,18 +24,18 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ATank::Fire()
 {
-	UE_LOG(LogTemp, Warning, TEXT("%s firing"), *GetName());
+	if (Barrel && FPlatformTime::Seconds() - LastFireTime > ReloadTimeInSeconds)
+	{
+		LastFireTime = FPlatformTime::Seconds();
 
-	if (!Barrel)
-		return;
-
-	FVector ProjectileStart = Barrel->GetSocketLocation(FName("Projectile"));
-	AProjectile * projectile = GetWorld()->SpawnActor<AProjectile>(
-		ProjectileBlueprint,
-		Barrel->GetSocketLocation(FName("Projectile")),
-		Barrel->GetSocketRotation(FName("Projectile"))
-		);
-	projectile->LaunchProjectile(LaunchSpeed);
+		FVector ProjectileStart = Barrel->GetSocketLocation(FName("Projectile"));
+		AProjectile * projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile"))
+			);
+		projectile->LaunchProjectile(LaunchSpeed);
+	}
 }
 
 void ATank::SetBarrelReference(UTankBarrel * BarrelToSet)
