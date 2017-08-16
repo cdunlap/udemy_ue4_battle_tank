@@ -7,7 +7,6 @@
 #include "Tank.generated.h"
 
 class UTankBarrel;
-class UTankAimingComponent;
 class AProjectile;
 
 UCLASS()
@@ -22,20 +21,12 @@ public:
 protected:
 	void BeginPlay() override;
 
-	UPROPERTY(BlueprintReadOnly)
-		UTankAimingComponent * AimingComponent = nullptr;
-
 public:
 
 	UFUNCTION(BlueprintCallable, Category = Firing)
 		void Fire();
 
-	void AimAt(const FVector & HitLocation);
-
-private:
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
-		float LaunchSpeed = 4000;
-	
+private:	
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 		float ReloadTimeInSeconds = 3.0f;
 
