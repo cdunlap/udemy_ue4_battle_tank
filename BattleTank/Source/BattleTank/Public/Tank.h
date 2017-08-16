@@ -20,6 +20,8 @@ public:
 	ATank();
 
 protected:
+	void BeginPlay() override;
+
 	UPROPERTY(BlueprintReadOnly)
 		UTankAimingComponent * AimingComponent = nullptr;
 

@@ -18,6 +18,11 @@ UTankAimingComponent::UTankAimingComponent()
 
 void UTankAimingComponent::Initialize(UTankTurret * TurretToSet, UTankBarrel * BarrelToSet)
 {
+	if (!ensure(TurretToSet && BarrelToSet)) {
+		UE_LOG(LogTemp, Error, TEXT("UTankAimingComponent::Initialize setting empty turret and barrel!"));
+		return;
+	}
+	UE_LOG(LogTemp, Warning, TEXT("UTankAimingComponent initializing"));
 	Turret = TurretToSet;
 	Barrel = BarrelToSet;
 }
