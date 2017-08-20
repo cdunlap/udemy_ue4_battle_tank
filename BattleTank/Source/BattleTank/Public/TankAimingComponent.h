@@ -36,15 +36,14 @@ public:
 
 	inline EFiringState GetFiringState() const { return FiringState; }
 
-	int GetCurrentAmmo() const { return CurrentAmmo; }
+	UFUNCTION(BlueprintCallable, Category = Firing)
+		int32 GetCurrentAmmo() const { return CurrentAmmo; }
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = State)
 		EFiringState FiringState = EFiringState::Reloading;
-	UPROPERTY(EditDefaultsOnly, Category = Firing)
-		int MaxAmmo = 100;
-	UPROPERTY(BlueprintReadOnly, Category = Firing)
-		int CurrentAmmo; /// This gets overwritten by MaxAmmo at BeginPlay
+	UPROPERTY(BlueprintReadWrite, Category = Firing)
+		int32 CurrentAmmo; /// This gets overwritten by MaxAmmo at BeginPlay
 private:
 	// Sets default values for this component's properties
 	UTankAimingComponent();

@@ -87,7 +87,6 @@ void UTankAimingComponent::BeginPlay()
 	Super::BeginPlay();
 
 	LastFireTime = GetWorld()->GetTimeSeconds();
-	CurrentAmmo = MaxAmmo;
 }
 
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
