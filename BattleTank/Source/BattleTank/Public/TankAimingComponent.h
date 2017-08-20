@@ -41,7 +41,8 @@ private:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	void MoveBarrelTowards(const FVector & AimDirection);
+	void MoveBarrelTowards();
+	bool IsBarrelMoving() const;
 
 	void BeginPlay() override;
 	void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
@@ -59,4 +60,5 @@ private:
 		TSubclassOf<AProjectile> ProjectileBlueprint;
 
 	float LastFireTime = 0.0f;
+	FVector AimDirection;
 };

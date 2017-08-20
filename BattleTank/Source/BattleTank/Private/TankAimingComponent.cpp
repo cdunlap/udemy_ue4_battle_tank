@@ -44,15 +44,15 @@ void UTankAimingComponent::AimAt(const FVector & HitLocation)
 		false, 0.0f, 0.0f, ESuggestProjVelocityTraceOption::DoNotTrace,
 		FCollisionResponseParams::DefaultResponseParam, IgnoreActors))
 	{
-		FVector AimDirection = LaunchVelocity.GetSafeNormal();
+		AimDirection = LaunchVelocity.GetSafeNormal();
 		// UE_LOG(LogTemp, Warning, TEXT("%f %s Aiming at %s"), time, *GetOwner()->GetName(), *AimDirection.ToString());
 
 		// Orient the barrel mesh to the direction
-		MoveBarrelTowards(AimDirection);
+		MoveBarrelTowards();
 	}
 }
 
-void UTankAimingComponent::MoveBarrelTowards(const FVector & AimDirection)
+void UTankAimingComponent::MoveBarrelTowards()
 {
 	if (!ensure(Barrel && Turret)) return;
 
@@ -67,11 +67,16 @@ void UTankAimingComponent::MoveBarrelTowards(const FVector & AimDirection)
 	Turret->Rotate(DeltaRotatorBarrel.Yaw);
 }
 
+bool UTankAimingComponent::IsBarrelMoving() const
+{
+	if (!ensure(Barrel)) return false;
+	return !AimDirection.Equals(Barrel->GetForwardVector(), 0.01);
+}
+
 void UTankAimingComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Warning, TEXT("UTankAImingComponent::TickComponent"));
 	LastFireTime = GetWorld()->GetTimeSeconds();
 }
 
@@ -79,9 +84,17 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if ((GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds)
+	if ((GetWorld()->GetTimeSeconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
 		FiringState = EFiringState::Reloading;
+	}
+	else if (IsBarrelMoving())
+	{
+		FiringState = EFiringState::Aiming;
+	}
+	else
+	{
+		FiringState = EFiringState::Locked;
 	}
 }
 
