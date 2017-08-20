@@ -12,7 +12,7 @@ UTankAimingComponent::UTankAimingComponent()
 {
 	// Set this component to be initialized when the game starts, and to be ticked every frame.  You can turn these features
 	// off to improve performance if you don't need them.
-	PrimaryComponentTick.bCanEverTick = false;
+	PrimaryComponentTick.bCanEverTick = true;
 
 	// ...
 }
@@ -67,13 +67,29 @@ void UTankAimingComponent::MoveBarrelTowards(const FVector & AimDirection)
 	Turret->Rotate(DeltaRotatorBarrel.Yaw);
 }
 
+void UTankAimingComponent::BeginPlay()
+{
+	Super::BeginPlay();
+
+	UE_LOG(LogTemp, Warning, TEXT("UTankAImingComponent::TickComponent"));
+	LastFireTime = GetWorld()->GetTimeSeconds();
+}
+
+void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
+{
+	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
+
+	if ((GetWorld()->GetTimeSeconds() - LastFireTime) > ReloadTimeInSeconds)
+	{
+		FiringState = EFiringState::Reloading;
+	}
+}
+
 void UTankAimingComponent::Fire()
 {
 	if (!ensure(Barrel && ProjectileBlueprint)) return;
 
-	bool isReloaded = GetWorld()->GetTimeSeconds() - LastFireTime > ReloadTimeInSeconds;
-
-	if (isReloaded)
+	if(FiringState != EFiringState::Reloading)
 	{
 		LastFireTime = GetWorld()->GetTimeSeconds();
 
