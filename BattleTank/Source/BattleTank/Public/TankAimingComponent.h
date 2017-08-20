@@ -36,6 +36,8 @@ public:
 
 	inline EFiringState GetFiringState() const { return FiringState; }
 
+	int GetCurrentAmmo() const { return CurrentAmmo; }
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = State)
 		EFiringState FiringState = EFiringState::Reloading;
