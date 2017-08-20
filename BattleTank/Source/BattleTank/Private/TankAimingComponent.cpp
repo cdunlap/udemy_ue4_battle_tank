@@ -87,13 +87,18 @@ void UTankAimingComponent::BeginPlay()
 	Super::BeginPlay();
 
 	LastFireTime = GetWorld()->GetTimeSeconds();
+	CurrentAmmo = MaxAmmo;
 }
 
 void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction)
 {
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 
-	if ((GetWorld()->GetTimeSeconds() - LastFireTime) < ReloadTimeInSeconds)
+	if (CurrentAmmo <= 0)
+	{
+		FiringState = EFiringState::NoAmmo;
+	}
+	else if ((GetWorld()->GetTimeSeconds() - LastFireTime) < ReloadTimeInSeconds)
 	{
 		FiringState = EFiringState::Reloading;
 	}
@@ -111,7 +116,7 @@ void UTankAimingComponent::Fire()
 {
 	if (!ensure(Barrel && ProjectileBlueprint)) return;
 
-	if(FiringState != EFiringState::Reloading)
+	if(FiringState != EFiringState::Reloading && FiringState != EFiringState::NoAmmo)
 	{
 		LastFireTime = GetWorld()->GetTimeSeconds();
 
@@ -122,5 +127,7 @@ void UTankAimingComponent::Fire()
 			Barrel->GetSocketRotation(FName("Projectile"))
 			);
 		projectile->LaunchProjectile(LaunchSpeed);
+
+		CurrentAmmo--;
 	}
 }

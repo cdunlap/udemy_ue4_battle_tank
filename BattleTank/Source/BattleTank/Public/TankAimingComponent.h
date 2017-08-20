@@ -15,7 +15,8 @@ enum class EFiringState : uint8
 {
 	Reloading,
 	Aiming,
-	Locked
+	Locked,
+	NoAmmo
 };
 
 
@@ -38,7 +39,10 @@ public:
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = State)
 		EFiringState FiringState = EFiringState::Reloading;
-
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+		int MaxAmmo = 100;
+	UPROPERTY(BlueprintReadOnly, Category = Firing)
+		int CurrentAmmo; /// This gets overwritten by MaxAmmo at BeginPlay
 private:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
