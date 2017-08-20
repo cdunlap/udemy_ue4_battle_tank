@@ -22,4 +22,9 @@ public:
 	// Max force in Newtons
 	UPROPERTY(EditDefaultsOnly)
 		float MaxDrivingForce = 4e5;
+
+private:
+	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction * ThisTickFunction) override;
+
+	UTankTrack();
 };
