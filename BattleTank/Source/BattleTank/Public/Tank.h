@@ -19,6 +19,9 @@ public:
 
 	inline int32 GetCurrentHealth() const { return CurrentHealth; }
 
+	UFUNCTION(BlueprintPure, Category = "Health")
+		float GetHealthPercent() const;
+
 protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		int32 StartingHealth = 100;
