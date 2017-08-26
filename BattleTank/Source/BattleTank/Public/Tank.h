@@ -17,6 +17,8 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 
+	void BeginPlay() override;
+
 	float TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser) override;
 
 	inline int32 GetCurrentHealth() const { return CurrentHealth; }
@@ -30,5 +32,5 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 		int32 StartingHealth = 100;
 	UPROPERTY(BlueprintReadWrite)
-		int32 CurrentHealth = StartingHealth;
+		int32 CurrentHealth;
 };
