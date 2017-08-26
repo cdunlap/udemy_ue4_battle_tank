@@ -23,6 +23,12 @@ protected:
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 		void FoundAimingComponent(UTankAimingComponent * AimCompRef);
+
+	void SetPawn(APawn * InPawn) override;
+
+	UFUNCTION()
+		void OnPossesedTankDeath();
+
 private:
 	UPROPERTY(EditDefaultsOnly)
 		float CrosshairXLocation = 0.5;
